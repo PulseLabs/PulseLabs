@@ -1,4 +1,5 @@
 angular.module('pulse.auth', [])
-.controller('AuthController', function ($scope) {
+.controller('AuthController', ['$cookies', '$scope', 'Songs', function ($scope, $cookies, Songs) {
+
   
-});
+}]);

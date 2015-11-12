@@ -1,4 +1,6 @@
 angular.module('pulse.factory', [])
-.factory('Songs', function ($scope) {
+.factory('Songs', function ($http) {
   
 });
+
+
