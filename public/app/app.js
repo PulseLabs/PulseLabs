@@ -1,9 +1,9 @@
-angular.module('pulse', ['ngCookies', 'pulse.user', 'pulse.playlist', 'pulse.auth', 'pulse.factory', 'pulse.main'])
+angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist', 'pulse.auth', 'pulse.factory', 'pulse.main'])
 // .constant('ApiEndpoint', {
 //   url: 'http://localhost:8100/api'
 // })
 .config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
-  $urlRouterProvider.otherwise('main');
+  
   $httpProvider.defaults.useXDomain = true;
   $httpProvider.defaults.withCredentials = true;
   delete $httpProvider.defaults.headers.common["X-Requested-With"];
@@ -27,7 +27,8 @@ angular.module('pulse', ['ngCookies', 'pulse.user', 'pulse.playlist', 'pulse.aut
       controller: 'UserController'
     });
 
-  $httpProvider.interceptors.push('AttachTokens');
+  $urlRouterProvider.otherwise('main');
+  // $httpProvider.interceptors.push('AttachTokens');
 });
 // .factory('AttachTokens', function ($window) {
 //   var attach = {
