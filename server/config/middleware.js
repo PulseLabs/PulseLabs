@@ -17,6 +17,6 @@ module.exports = function (app, express) {
   app.use('/api/play', playlistRouter); // use play router for playlist request
 
   // inject our routers into their respective route files
-  require('../users/userRoute.js')(userRouter);
-  require('../links/playlistRoute.js')(playlistRouter);
+  // require('../user/userRoute.js')(userRouter);
+  // require('../playlist/playlistRoute.js')(playlistRouter);
 };
