@@ -1,3 +1,18 @@
 body {
   background: black;
 }
+
+.main {
+  font-family: 'Raleway', sans-serif;
+  font-size: 5em;
+  margin: 0 auto;
+  font-weight: 200;
+}
+
+.user-nav {
+  color: #ef1ac9;
+}
+
+.playlist-nav {
+  color: #b50ce6;
+}
