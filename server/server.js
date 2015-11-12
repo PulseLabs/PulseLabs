@@ -1,9 +1,10 @@
 var express = require('express');
+var mongoose = require('mongoose');
+
 var app = express();
 
-app.use(function(req, res) {
-  res.status(200).send("Hello World");
-});
+//connect to mongo db here
+require('./config/middleware')(app, express);
 
 app.listen(8888, function(req, res) {
   console.log('Server is running.');
