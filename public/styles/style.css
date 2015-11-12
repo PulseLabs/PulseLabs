@@ -9,10 +9,21 @@ body {
   font-weight: 200;
 }
 
+.navigation {
+  margin-top: 15%;
+}
+
 .user-nav {
+  margin-top: 30%;
   color: #ef1ac9;
 }
 
+.nav-box {
+  margin-top: 5%;
+}
+
 .playlist-nav {
+  margin-top: 30%;
   color: #b50ce6;
 }
+
