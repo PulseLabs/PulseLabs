@@ -82,6 +82,33 @@ passport.use(new SpotifyStrategy({
 
   var userRouter = express.Router();
   var playlistRouter = express.Router();
+>>>>>>> Got basic OAuth working on localhost/auth/spotify route
+
+  app.get('/auth/spotify',
+    passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
+    function(req, res){
+// The request will be redirected to spotify for authentication, so this
+// function will not be called.
+  });
+
+  app.get('/callback',
+  passport.authenticate('spotify', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+  app.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/');
+  });
+
+  function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login');
+  }
+
+  var userRouter = express.Router();
+  var playlistRouter = express.Router();
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/play', playlistRouter); // use play router for playlist request
