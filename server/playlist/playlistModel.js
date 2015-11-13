@@ -2,12 +2,7 @@ var mongoose = require('mongoose');
 var Q = require('q');
 
 var PlaylistSchema = new mongoose.Schema({
-  queue: {
-    type: Array,
-    require: true
-  },
-
-  url: {
+  code: {
     type: String,
     require: true
   },
@@ -15,8 +10,17 @@ var PlaylistSchema = new mongoose.Schema({
   songList: {
     type: Array,
     require: true
+  },
+
+  userId: {
+    type: String,
+    require: true
   }
 
 });
+
+pre('save', function() {
+  
+})
 
 module.exports = mongoose.model('playlists', PlaylistSchema);

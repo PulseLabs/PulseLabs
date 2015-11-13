@@ -25,6 +25,11 @@ var SongSchema = new mongoose.Schema({
   userId: {
     type: String,
     required: true
+  },
+
+  order: {
+    type: Number,
+    required: true
   }
 });
 

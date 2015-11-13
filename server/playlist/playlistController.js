@@ -1,36 +1,31 @@
 var Playlist = require('./playlistModel.js');
 
 module.exports = {
-  // find host by their user id
-  findHost: function(res, req, next) {
-    var findHost = Q.nbind(Playlist.find,)
+  newPlaylist: function(res, req, next) {
+    var userId = req.user.ObjectId;
+    var createPlaylist = Q.nbind(Playlist.create, Playlist);
+    var newPlaylist = {
+          songList: [],
+          userId: userId
+        };
+    
+    createPlaylist(newPlaylist).then(function (createdPlaylist) {
+      if (createdPlaylist) {
+        res.json(createdPlaylist);
+      }
+    })
+    .fail(function (error) {
+      next(error);
+    });
   },
 
-  newPlaylist: function(res, req, next) {
-    var userId = req.body.userId;
-    var createPlaylist = Q.nbind(Playlist.create, Playlist);
-    var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
-
-    findPlaylist({userId: userId})
-      .then(function (match) {
-        if (match) {
-          res.send(match);
-        }
-      })
-      .then(function (title) {
-        if (title) {
-          var newLink = {
-            url: url,
-            visits: 0,
-            base_url: req.headers.origin,
-            title: title
-          };
-          return createLink(newLink);
-        }
-      })
-      .then(function (createdLink) {
-        if (createdLink) {
-          res.json(createdLink);
+  gotoPlaylist: function(req, res, next, code) {
+    Playlist.findOne({code: code})
+      .then(function(playlist) {
+        if (playlist) {
+          res.json(playlist);
+        } else {
+          res.send(404, 'Cannot find playlist.');
         }
       })
       .fail(function (error) {
