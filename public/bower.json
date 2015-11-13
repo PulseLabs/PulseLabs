@@ -1,0 +1,33 @@
+{
+  "name": "pulse",
+  "homepage": "https://github.com/LucillaC/PulseLabs",
+  "authors": [
+    "Lucilla Chalmer <chalmer.lucilla@gmail.com>"
+  ],
+  "description": "crowd sourced playlists",
+  "main": "app/app.jsa",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node",
+    "yui"
+  ],
+  "keywords": [
+    "playlist",
+    "music",
+    "spotify",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-spotify": "~1.0.0"
+  }
+}
