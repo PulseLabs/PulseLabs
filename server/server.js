@@ -4,8 +4,8 @@ var db = 'mongodb://pulse:hr352015@ds053954.mongolab.com:53954/pulse-dev';
 var app = express();
 var Q = require('q');
 
-mongoose.connect(db);
-
+//connect to mongo db here
+mongoose.connect('mongodb://localhost/pulse');
 app.use(express.static('public'));
 require('./config/middleware.js')(app, express);
 
@@ -15,7 +15,7 @@ app.get('/login', function() {
 });
 
 app.post('/party', function() {
-  // 
+  //
 });
 
 app.listen(8888, function(req, res) {

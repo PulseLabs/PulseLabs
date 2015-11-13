@@ -11,7 +11,7 @@ module.exports = function (app, express) {
   var appSecret = 'e1d9ba2ed0d147cfbb1bbdf5e58441d2';
 
 
-//passport session setup - user serialization, this serializes the entire profile atm
+//passport session setup - user serialization , this serializes the entire profile atm
 //TODO fix to "storing the user ID when serializing, and finding
 //   the user by ID when deserializing"
 
@@ -42,6 +42,7 @@ passport.use(new SpotifyStrategy({
       // and return that user instead. TODO add user to DB / find user
       userController.associateProfile(profile.id)
         .then(function (user) {
+          console.log('user from inside passport strat: ', user);
           return done(null, user);
         });
     });
@@ -62,7 +63,7 @@ passport.use(new SpotifyStrategy({
   });
 
   app.get('/api/auth',
-    passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
+    passport.authenticate('spotify', {scope: [/*'user-read-email', 'user-read-private'*/], showDialog: true}),
     function(req, res){
 // The request will be redirected to spotify for authentication, so this
 // function will not be called.
@@ -84,35 +85,11 @@ passport.use(new SpotifyStrategy({
     res.redirect('/login');
   }
 
-  var userRouter = express.Router();
+  // var userRouter = express.Router();
   var playlistRouter = express.Router();
->>>>>>> Got basic OAuth working on localhost/auth/spotify route
-
-  app.get('/auth/spotify',
-    passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
-    function(req, res){
-// The request will be redirected to spotify for authentication, so this
-// function will not be called.
-  });
-
-  app.get('/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-  app.get('/logout', function(req, res){
-    req.logout();
-    res.redirect('/');
-  });
-
-  function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/login');
-  }
-
+  // app.use('/api/users', userRouter); // use user router for all user request
   var userRouter = express.Router();
-  var playlistRouter = express.Router();
+  // var playlistRouter = express.Router();
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/play', playlistRouter); // use play router for playlist request
