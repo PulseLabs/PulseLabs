@@ -12,15 +12,14 @@ var PlaylistSchema = new mongoose.Schema({
     require: true
   },
 
-  userId: {
+  userid: {
     type: String,
     require: true
   }
-
 });
 
 pre('save', function() {
-  
-})
+
+});
 
 module.exports = mongoose.model('playlists', PlaylistSchema);
