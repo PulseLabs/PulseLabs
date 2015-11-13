@@ -23,7 +23,7 @@ module.exports = {
     });
   },
 
-  // have code, and password
+  // client should pass code, and password
   gotoPlaylist: function(req, res, next, code) {
     var password = req.body.password;
     var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
