@@ -1,28 +1,26 @@
-var User = require('./userModel.js');
+var Q = require('q');
 var Promise = require('bluebird');
 
 module.exports = {
-//Take the username from spotify profile and
-//return associated user from the database, if none, create one and
-//return it
+
   associateProfile: function (username) {
-    return new Promise(function(resolve, reject) {
-      resolve(
-        User.findOne({username: username})
-          .then(function (user) {
-            if (user) {
-              return user;
-            } else {
-              User.create(
-                newUser = {
-                  username: username
-                })
-                .then(function (user) {
-                  return user;
-                });
-              }
-          })
-      );
-    });
+
+    User.findOne({username: username})
+      .then(function (user) {
+        if (!user) {
+          create = Q.nbind(User.create, User);
+          newUser = {
+            username: username
+          };
+          return create(newUser);
+        } else {
+          var promiseUser = function (user) {
+            return new Promise(function (resolve, reject) {
+              resolve(user);
+            });
+          };
+          return promiseUser(user);
+        }
+      });
   }
 };
