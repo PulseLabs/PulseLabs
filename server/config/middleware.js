@@ -13,10 +13,10 @@ module.exports = function (app, express) {
 
 
   app.use('/api/users', userRouter); // use user router for all user request
-
   app.use('/api/play', playlistRouter); // use play router for playlist request
+  app.use('/api/song', songlistRouter);
 
-  // inject our routers into their respective route files
-  // require('../user/userRoute.js')(userRouter);
-  // require('../playlist/playlistRoute.js')(playlistRouter);
+  require('../users/userRoute.js')(userRouter);
+  require('../songlist/songlistRoute.js')(songlistRouter);
+  require('../playlist/playlistRoute.js')(playlistRouter);
 };
