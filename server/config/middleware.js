@@ -5,6 +5,7 @@ var session = require('express-session');
 var SpotifyStrategy = require('passport-spotify').Strategy;
 var userController = require('../user/userController.js');
 
+
 module.exports = function (app, express) {
 
   var appKey = 'd18305cfb355420caff075b39be0d8ef';
@@ -36,6 +37,7 @@ passport.use(new SpotifyStrategy({
     // asynchronous verification, for effect...
     process.nextTick(function () {
       console.log("spotify profile: ", profile);
+
       // To keep the example simple, the user's spotify profile is returned to
       // represent the logged-in user. In a typical application, you would want
       // to associate the spotify account with a user record in your database,
@@ -44,6 +46,7 @@ passport.use(new SpotifyStrategy({
         .then(function (user) {
           return done(null, user);
         });
+      return done(null, profile);
     });
   }));
 
@@ -60,6 +63,7 @@ passport.use(new SpotifyStrategy({
   app.get('/', function(req, res) {
     res.render('index.html', { user: req.user});
   });
+
 
   app.get('/api/auth',
     passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
