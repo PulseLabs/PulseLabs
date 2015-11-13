@@ -1,4 +1,4 @@
-angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist', 'pulse.auth', 'pulse.factory', 'pulse.main'])
+angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist','pulse.factory', 'pulse.auth', 'pulse.main'])
 // .constant('ApiEndpoint', {
 //   url: 'http://localhost:8100/api'
 // })
