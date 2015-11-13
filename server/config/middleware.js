@@ -10,8 +10,8 @@ module.exports = function (app, express) {
   var appKey = 'd18305cfb355420caff075b39be0d8ef';
   var appSecret = 'e1d9ba2ed0d147cfbb1bbdf5e58441d2';
 
+//passport session setup - user serialization, this serializes the entire profile atm
 
-//passport session setup - user serialization , this serializes the entire profile atm
 //TODO fix to "storing the user ID when serializing, and finding
 //   the user by ID when deserializing"
 
@@ -63,7 +63,7 @@ passport.use(new SpotifyStrategy({
   });
 
   app.get('/api/auth',
-    passport.authenticate('spotify', {scope: [/*'user-read-email', 'user-read-private'*/], showDialog: true}),
+    passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
     function(req, res){
 // The request will be redirected to spotify for authentication, so this
 // function will not be called.
