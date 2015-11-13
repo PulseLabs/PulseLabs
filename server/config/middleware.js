@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
 var SpotifyStrategy = require('passport-spotify').Strategy;
-
+var userController = require('../user/userController.js');
 
 module.exports = function (app, express) {
 
@@ -35,11 +35,15 @@ passport.use(new SpotifyStrategy({
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function () {
+      console.log("spotify profile: ", profile);
       // To keep the example simple, the user's spotify profile is returned to
       // represent the logged-in user. In a typical application, you would want
       // to associate the spotify account with a user record in your database,
       // and return that user instead. TODO add user to DB / find user
-      return done(null, profile);
+      userController.associateProfile(profile.id)
+        .then(function (user) {
+          return done(null, user);
+        });
     });
   }));
 
@@ -57,7 +61,7 @@ passport.use(new SpotifyStrategy({
     res.render('index.html', { user: req.user});
   });
 
-  app.get('/auth/spotify',
+  app.get('/api/auth',
     passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
     function(req, res){
 // The request will be redirected to spotify for authentication, so this
@@ -65,9 +69,9 @@ passport.use(new SpotifyStrategy({
   });
 
   app.get('/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+    passport.authenticate('spotify', { failureRedirect: '/login' }),
+    function(req, res) {
+      res.redirect('/');
   });
 
   app.get('/logout', function(req, res){
