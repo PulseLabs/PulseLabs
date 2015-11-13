@@ -7,7 +7,5 @@ module.exports = function (app) {
   app.post('/create', playListController.create);
   
   app.param('code', playListController.gotoPlaylist);
-
   // app.get('/:code', playListController.navToLink);
-
 };
