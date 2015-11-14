@@ -3,9 +3,6 @@ var crypto = require('crypto');
 var Q = require('q');
 
 var PlaylistSchema = new mongoose.Schema({
-  code: {
-    type: String
-  },
 
   songList: {
     type: Array,
@@ -18,24 +15,30 @@ var PlaylistSchema = new mongoose.Schema({
   },
 
   password: {
-    type: String
+    type: String,
+    require: true
   },
 
   name: {
     type: String
+  },
+
+  code: {
+    type: String
   }
 });
 
-var createSha = function(userId) {
+var createSha = function(userid) {
   var shasum = crypto.createHash('sha1');
   shasum.update(userid);
   return shasum.digest('hex').slice(0, 5);
-}
+};
 
 PlaylistSchema.pre('save', function(next) {
   var code = createSha(this.userid);
   this.code = code;
   next();
 });
+
 
 module.exports = mongoose.model('playlists', PlaylistSchema);
