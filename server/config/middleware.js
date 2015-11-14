@@ -96,7 +96,7 @@ passport.use(new SpotifyStrategy({
   app.use('/api/play', playlistRouter); // use play router for playlist request
 
 
-  require('../users/userRoute.js')(userRouter);
+  // require('../users/userRoute.js')(userRouter);
   require('../song/songRoute.js')(songRouter);
 
   // require('../users/userRoute.js')(userRouter);

@@ -5,15 +5,15 @@ module.exports = {
 
   newPlaylist: function(req, res, next) {
     console.log("$$$$$$$$$$$*****************", req);
-    var userId = 0; //req.user.ObjectId;
+    var userid = 0; //req.user.ObjectId;
     var name = req.body.name;
     var password = req.body.password;
     var createPlaylist = Q.nbind(Playlist.create, Playlist);
     var newPlaylist = {
-          name: name,
           songList: [],
+          userid: userid,
           password: password,
-          userid: userid
+          name: name
         };
 
     createPlaylist(newPlaylist).then(function (createdPlaylist) {
@@ -27,15 +27,17 @@ module.exports = {
   },
 
   // client should pass code, and password
-  gotoPlaylist: function(req, res, next, code) {
-    var password = req.body.password;
-    Playlist.findOne({code: code})
+  gotoPlaylist: function(req, res, next) {
+    var password = 'abc';
+    var code = req.params.code;
+    var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
+    findPlaylist({code: code})
       .then(function(playlist) {
         if (playlist) {
           if (password === playlist.password) {
             res.json(playlist);
           } else {
-            res.statusCode(403);
+            res.send('wrong password');
           }
         } else {
           res.send(404, 'Cannot find playlist.');

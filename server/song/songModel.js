@@ -20,7 +20,7 @@ var SongSchema = new mongoose.Schema({
   image: {
     type: String,
     default: 'https://d3m79pznqer0b2.cloudfront.net/default-album-image.jpg'
-  }
+  },
 
   userId: {
     type: String,
