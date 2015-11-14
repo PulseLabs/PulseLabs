@@ -3,7 +3,7 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
 //   url: 'http://localhost:8100/api'
 // })
 .config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
-  
+
   $httpProvider.defaults.useXDomain = true;
   $httpProvider.defaults.withCredentials = true;
   delete $httpProvider.defaults.headers.common["X-Requested-With"];

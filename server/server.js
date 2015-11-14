@@ -7,6 +7,7 @@ var Q = require('q');
 //connect to mongo db here
 mongoose.connect('mongodb://localhost/pulse');
 app.use(express.static('public'));
+
 require('./config/middleware.js')(app, express);
 
 app.get('/login', function() {

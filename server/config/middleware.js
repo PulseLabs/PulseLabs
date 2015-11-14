@@ -4,6 +4,7 @@ var passport = require('passport');
 var session = require('express-session');
 var SpotifyStrategy = require('passport-spotify').Strategy;
 var userController = require('../user/userController.js');
+var jwt = require('jwt-simple');
 
 module.exports = function (app, express) {
 
@@ -42,7 +43,6 @@ passport.use(new SpotifyStrategy({
       // and return that user instead. TODO add user to DB / find user
       userController.associateProfile(profile.id)
         .then(function (user) {
-          console.log('user from inside passport strat: ', user);
           return done(null, user);
         });
     });
@@ -94,9 +94,11 @@ passport.use(new SpotifyStrategy({
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/play', playlistRouter); // use play router for playlist request
-  app.use('/api/song', songRouter);
+
 
   require('../users/userRoute.js')(userRouter);
   require('../song/songRoute.js')(songRouter);
+
+  // require('../users/userRoute.js')(userRouter);
   require('../playlist/playlistRoute.js')(playlistRouter);
 };
