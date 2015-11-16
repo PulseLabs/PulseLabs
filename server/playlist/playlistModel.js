@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
 var crypto = require('crypto');
+var SongSchema = require('../song/songModel.js');
 var Q = require('q');
 
-var PlaylistSchema = new mongoose.Schema({
+var Schema = mongoose.Schema; 
+var PlaylistSchema = new Schema({
 
-  songList: {
-    type: Array,
-    require: true
-  },
+  songList: [SongSchema],
 
   userid: {
     type: String,
@@ -39,6 +38,5 @@ PlaylistSchema.pre('save', function(next) {
   this.code = code;
   next();
 });
-
 
 module.exports = mongoose.model('playlists', PlaylistSchema);

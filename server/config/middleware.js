@@ -22,7 +22,7 @@ module.exports = function (app, express) {
 
   passport.deserializeUser(function(obj, done) {
     done(null, obj);
-  }) ;
+  });
 
   // Use the SpotifyStrategy within Passport.
   //   Strategies in Passport require a `verify` function, which accept
@@ -49,6 +49,9 @@ module.exports = function (app, express) {
     }));
 
   app.use(morgan('dev'));
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
   app.use(bodyParser.json());
 
   app.use(session({secret: 'wreckless parasol'}));
@@ -94,7 +97,7 @@ module.exports = function (app, express) {
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/play', playlistRouter); // use play router for playlist request
-  app.use('/api/song', songRouter);
+  // app.use('/api/song', songRouter);
 
   // require('../users/userRoute.js')(userRouter);
   require('../song/songRoute.js')(songRouter);

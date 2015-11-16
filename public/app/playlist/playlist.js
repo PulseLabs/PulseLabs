@@ -13,4 +13,14 @@ angular.module('pulse.playlist', [])
       $scope.tracks = result.data.tracks.items;
     })
   };
+
+  $scope.addSong = function () {
+    $http({
+      method: 'POST',
+      url: '/api/play/add'
+    }).then(function (result) {
+      console.log('addsong');
+      return result;
+    });
+  };
 });
