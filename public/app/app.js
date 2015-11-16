@@ -9,7 +9,7 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
   delete $httpProvider.defaults.headers.common["X-Requested-With"];
   $httpProvider.defaults.headers.common.Accept = "application/json";
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
-
+  // $httpProvider.defaults.headers.common["Access-Control-Allow-Origin"] = 'http://localhost:8888';
   $stateProvider
     .state('main', {
       url: '/main',
@@ -25,6 +25,11 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
       url: '/user',
       templateUrl: '/app/user/user.html',
       controller: 'UserController'
+    })
+    .state('newplaylist', {
+      url: '/newplaylist',
+      templateUrl: '/app/playlist/newplaylist.html',
+      controller: 'PlaylistController'
     });
 
   $urlRouterProvider.otherwise('/main');

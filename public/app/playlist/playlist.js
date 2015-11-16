@@ -1,17 +1,17 @@
 angular.module('pulse.playlist', [])
-.controller('PlaylistController', function ($scope, $http) {
+.controller('PlaylistController', function ($scope, $http, Songs, $state) {
   $scope.tracks = [];
+  $scope.currentPlaylist = {};
+
   $scope.searchTrack = function () {
-    var searchStr = $scope.search.split(" ").join("+");
-    console.log(searchStr);
-    $http({
-      method: 'GET',
-      withCredentials: false,
-      url: 'http://api.spotify.com/v1/search?q='+searchStr+'&type=track'
-    }).then(function (result) {
-      console.log(result.data.tracks.items);
-      $scope.tracks = result.data.tracks.items;
-    })
+    if ($scope.search !== '') {
+      var searchStr = $scope.search.split(" ").join("+");
+      Songs.searchSongs(searchStr)
+      .then(function (resultData) {
+        // console.log(result.data.tracks.items);
+        $scope.tracks = resultData.tracks.items;
+      });
+    }
   };
 
   $scope.addSong = function () {
@@ -22,5 +22,14 @@ angular.module('pulse.playlist', [])
       console.log('addsong');
       return result;
     });
+  };
+
+  $scope.addPlaylist = function () {
+    Songs.addPlaylist($scope.newName)
+      .then(function (playlist) {
+        console.log('playlist returned from service: ', playlist);
+        $scope.currentPlaylist = playlist;
+        $state.go('playlist');
+      });
   };
 });

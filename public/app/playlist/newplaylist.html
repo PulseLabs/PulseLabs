@@ -1,0 +1,11 @@
+<div id='new-playlist'>
+  <div class="row">
+    <div class="col m6 offset-m3">
+      <h2>Create a New Playlist</h2>
+      <form name="playlistForm" ng-submit='addPlaylist()'>
+        <input type='text' ng-model='newName' placeholder="Name" required>
+        <button class="waves-effect waves-light btn" ng-disabled="playlistForm.$invalid" ng-class="{ 'has-error' : playlistForm.$invalid }">Create</button>
+      </form>
+    </div>
+  </div>
+</div>
