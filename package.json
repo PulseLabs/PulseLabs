@@ -21,10 +21,7 @@
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.0.5",
     "body-parser": "^1.14.1",
-<<<<<<< 2af037c06d8262838bc403914697fa17a0ecfc78
-=======
     "cookie-parser": "^1.4.0",
->>>>>>> Playlist adding and getting on the front end, slight tweak to sessions
     "cors": "^2.7.1",
     "crypto": "0.0.3",
     "express": "^4.4.5",
