@@ -17,7 +17,7 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
       controller: 'MainController'
     })
     .state('playlist', {
-      url: '/playlist',
+      url: '/playlist/:code',
       templateUrl: '/app/playlist/playlist.html',
       controller: 'PlaylistController'
     })

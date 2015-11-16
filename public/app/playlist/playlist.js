@@ -1,7 +1,15 @@
 angular.module('pulse.playlist', [])
-.controller('PlaylistController', function ($scope, $http, Songs, $state) {
+.controller('PlaylistController', function ($scope, $http, Songs, $location, $state, $stateParams) {
   $scope.tracks = [];
   $scope.currentPlaylist = {};
+
+  $scope.getPlaylist = function () {
+    var code = $stateParams.code;
+    Songs.getPlaylist(code)
+    .then(function (playlist) {
+      $scope.currentPlaylist = {};
+    });
+  };
 
   $scope.searchTrack = function () {
     if ($scope.search !== '') {
@@ -32,4 +40,8 @@ angular.module('pulse.playlist', [])
         $state.go('playlist');
       });
   };
+
+  if ($location.path() != "/newPlaylist") {
+    $scope.getPlaylist();
+  }
 });
