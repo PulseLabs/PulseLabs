@@ -4,7 +4,6 @@ var Q = require('q');
 module.exports = {
 
   newPlaylist: function(req, res, next) {
-    console.log("$$$$$$$$$$$*****************", req);
     var userid = 0; //req.user.ObjectId;
     var name = req.body.name;
     var password = req.body.password;
