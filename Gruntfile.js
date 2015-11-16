@@ -31,11 +31,11 @@ module.exports = function (grunt) {
     watch:{
       public:{
         files: 'public/**/*.js',
-        tasks: ['newer:jshint:public']
+        tasks: ['jshint:public']
       },
       server:{
         files: 'server/**/*.js',
-        tasks: ['newer:jshint:server']
+        tasks: ['jshint:server']
       }
     }
   });
@@ -51,7 +51,7 @@ module.exports = function (grunt) {
   grunt.registerTask('heroku', 
   ['newer:uglify:all']);
   grunt.registerTask('testPublic',
-    ['watch:public']);
+    ['jshint:public','watch:public']);
   grunt.registerTask('testServer', 
-    ['watch:server']);
+    ['jshint:server','watch:server']);
 }
