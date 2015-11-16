@@ -12,8 +12,15 @@ angular.module('pulse.factory', [])
     });
   };
 
-  var getSongs = function (query, type) {
-
+  var getPlaylist = function (code) {
+    return $http({
+      method: 'GET',
+      url: '/api/play/:' + code,
+      data: {}
+    })
+    .then(function (resp) {
+      return resp.data;
+    });
   };
 
   var addPlaylist = function (name) {
@@ -30,7 +37,7 @@ angular.module('pulse.factory', [])
 
   return {
     searchSongs: searchSongs,
-    getSongs: getSongs,
+    getPlaylist: getPlaylist,
     addPlaylist: addPlaylist
   };
 });
