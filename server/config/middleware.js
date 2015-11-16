@@ -2,9 +2,9 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
 var SpotifyStrategy = require('passport-spotify').Strategy;
 var userController = require('../user/userController.js');
-var jwt = require('jwt-simple');
 
 module.exports = function (app, express) {
 
@@ -52,9 +52,10 @@ module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({
     extended: true
   }));
+  app.use(cookieParser());
   app.use(bodyParser.json());
 
-  app.use(session({secret: 'wreckless parasol'}));
+  app.use(session({secret: 'keyboard cat'}));
 
   app.use(passport.initialize());
   app.use(passport.session());
@@ -66,7 +67,7 @@ module.exports = function (app, express) {
   });
 
   app.get('/api/auth',
-    passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
+    passport.authenticate('spotify', {scope: [/*'user-read-email', 'user-read-private'*/], showDialog: true}),
     function(req, res){
     // The request will be redirected to spotify for authentication, so this
     // function will not be called.

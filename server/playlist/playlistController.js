@@ -4,8 +4,9 @@ var Q = require('q');
 module.exports = {
 
   newPlaylist: function(req, res, next) {
-    // TODO: need session to store user id?
-    var userid = 1; //req.user.ObjectId;
+    // console.log("$$$$$$$$$$$*****************", req);
+    // console.log('*********** ', req.session.passport.user.username);
+    var userid = req.session.passport.user.username;
     var name = req.body.name;
     var password = req.body.password;
     var createPlaylist = Q.nbind(Playlist.create, Playlist);
