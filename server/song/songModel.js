@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 var Q = require('q');
 
-var SongSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+var SongSchema = new Schema({
   songname: {
     type: String,
     required: true
@@ -22,15 +23,11 @@ var SongSchema = new mongoose.Schema({
     default: 'https://d3m79pznqer0b2.cloudfront.net/default-album-image.jpg'
   },
 
-  userId: {
-    type: String,
-    required: true
-  },
-
   order: {
     type: Number,
     required: true
   }
 });
 
-module.exports = mongoose.model('songs', SongSchema);
+module.exports = SongSchema;
+// module.exports = mongoose.model('songs', SongSchema);

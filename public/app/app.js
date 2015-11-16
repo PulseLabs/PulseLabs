@@ -27,7 +27,7 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
       controller: 'UserController'
     });
 
-  $urlRouterProvider.otherwise('main');
+  $urlRouterProvider.otherwise('/main');
   // $httpProvider.interceptors.push('AttachTokens');
 });
 // .factory('AttachTokens', function ($window) {

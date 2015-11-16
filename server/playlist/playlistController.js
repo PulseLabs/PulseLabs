@@ -4,17 +4,16 @@ var Q = require('q');
 module.exports = {
 
   newPlaylist: function(req, res, next) {
-    console.log("$$$$$$$$$$$*****************", req);
-    var userid = 0; //req.user.ObjectId;
+    // TODO: need session to store user id?
+    var userid = 1; //req.user.ObjectId;
     var name = req.body.name;
     var password = req.body.password;
     var createPlaylist = Q.nbind(Playlist.create, Playlist);
     var newPlaylist = {
-          songList: [],
-          userid: userid,
-          password: password,
-          name: name
-        };
+      userid: userid,
+      password: password,
+      name: name
+    };
 
     createPlaylist(newPlaylist).then(function (createdPlaylist) {
       if (createdPlaylist) {
@@ -28,7 +27,7 @@ module.exports = {
 
   // client should pass code, and password
   gotoPlaylist: function(req, res, next) {
-    var password = 'abc';
+    var password = req.body.password;
     var code = req.params.code;
     var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
     findPlaylist({code: code})
@@ -46,5 +45,35 @@ module.exports = {
       .fail(function (error) {
         next(error);
       });
+  },
+
+  addSong: function (req, res, next) {
+    var code = req.params.code;
+    var newSong = req.body;
+    // var newSong = {
+    //   songname: "What do you mean",
+    //   artist: "Justin",
+    //   uri: "spotify:artist:1uNFoZAHBGtllmzznpCI3s",
+    //   image: "https://i.scdn.co/image/01a39b1c64c6a93037f0a5af6b29e46987fde4ab",
+    //   order: 0
+    // };
+
+    var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
+    findPlaylist({code: code})
+      .then(function(playlist) {
+        if (playlist) {
+          playlist.songList.push(newSong);
+        }
+        playlist.save(function (err, newSong) {
+          if (err) return next(err);
+          res.json(newSong);
+        });
+      })
+      .fail(function (error) {
+        next(error);
+      });
+  },
+  deleteSong: function (req, res, next) {
+    next();
   }
 };

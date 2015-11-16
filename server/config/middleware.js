@@ -11,44 +11,47 @@ module.exports = function (app, express) {
   var appKey = 'd18305cfb355420caff075b39be0d8ef';
   var appSecret = 'e1d9ba2ed0d147cfbb1bbdf5e58441d2';
 
-//passport session setup - user serialization, this serializes the entire profile atm
+  //passport session setup - user serialization, this serializes the entire profile atm
 
-//TODO fix to "storing the user ID when serializing, and finding
-//   the user by ID when deserializing"
+  //TODO fix to "storing the user ID when serializing, and finding
+  //   the user by ID when deserializing"
 
-passport.serializeUser(function(user, done) {
-  done(null, user);
-});
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
 
-passport.deserializeUser(function(obj, done) {
-  done(null, obj);
-}) ;
+  passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+  });
 
-// Use the SpotifyStrategy within Passport.
-//   Strategies in Passport require a `verify` function, which accept
-//   credentials (in this case, an accessToken, refreshToken, and spotify
-//   profile), and invoke a callback with a user object.
-passport.use(new SpotifyStrategy({
-  clientID: appKey,
-  clientSecret: appSecret,
-  callbackURL: 'http://localhost:8888/callback'
-  },
-  function(accessToken, refreshToken, profile, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      console.log("spotify profile: ", profile);
-      // To keep the example simple, the user's spotify profile is returned to
-      // represent the logged-in user. In a typical application, you would want
-      // to associate the spotify account with a user record in your database,
-      // and return that user instead. TODO add user to DB / find user
-      userController.associateProfile(profile.id)
-        .then(function (user) {
-          return done(null, user);
-        });
-    });
-  }));
+  // Use the SpotifyStrategy within Passport.
+  //   Strategies in Passport require a `verify` function, which accept
+  //   credentials (in this case, an accessToken, refreshToken, and spotify
+  //   profile), and invoke a callback with a user object.
+  passport.use(new SpotifyStrategy({
+    clientID: appKey,
+    clientSecret: appSecret,
+    callbackURL: 'http://localhost:8888/callback'
+    },
+    function(accessToken, refreshToken, profile, done) {
+      // asynchronous verification, for effect...
+      process.nextTick(function () {
+        console.log("spotify profile: ", profile);
+        // To keep the example simple, the user's spotify profile is returned to
+        // represent the logged-in user. In a typical application, you would want
+        // to associate the spotify account with a user record in your database,
+        // and return that user instead. TODO add user to DB / find user
+        userController.associateProfile(profile.id)
+          .then(function (user) {
+            return done(null, user);
+          });
+      });
+    }));
 
   app.use(morgan('dev'));
+  app.use(bodyParser.urlencoded({
+    extended: true
+  }));
   app.use(bodyParser.json());
 
   app.use(session({secret: 'wreckless parasol'}));
@@ -65,8 +68,8 @@ passport.use(new SpotifyStrategy({
   app.get('/api/auth',
     passport.authenticate('spotify', {scope: ['user-read-email', 'user-read-private'], showDialog: true}),
     function(req, res){
-// The request will be redirected to spotify for authentication, so this
-// function will not be called.
+    // The request will be redirected to spotify for authentication, so this
+    // function will not be called.
   });
 
   app.get('/callback',
@@ -94,11 +97,9 @@ passport.use(new SpotifyStrategy({
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/play', playlistRouter); // use play router for playlist request
-
+  // app.use('/api/song', songRouter);
 
   // require('../users/userRoute.js')(userRouter);
   require('../song/songRoute.js')(songRouter);
-
-  // require('../users/userRoute.js')(userRouter);
   require('../playlist/playlistRoute.js')(playlistRouter);
 };
