@@ -14,8 +14,9 @@ var PlaylistSchema = new Schema({
   },
 
   password: {
-    type: String,
-    require: true
+    type: String
+    // ,
+    // require: true
   },
 
   name: {
