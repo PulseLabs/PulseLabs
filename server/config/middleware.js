@@ -6,7 +6,8 @@ var cookieParser = require('cookie-parser');
 var SpotifyStrategy = require('passport-spotify').Strategy;
 var userController = require('../user/userController.js');
 
-module.exports = function (app, express) {
+
+module.exports = function (app, io, express) {
 
   var appKey = 'd18305cfb355420caff075b39be0d8ef';
   var appSecret = 'e1d9ba2ed0d147cfbb1bbdf5e58441d2';
