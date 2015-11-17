@@ -51,6 +51,7 @@
     "q": "^1.0.1",
     "request": "^2.36.0",
     "socket.io": "^1.3.7",
+    "spotify-stream": "git://github.com/PulseLabs/spotify-stream.git",
     "time-grunt": "^1.2.2"
   }
 }
