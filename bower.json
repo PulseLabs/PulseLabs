@@ -1,5 +1,6 @@
 {
   "name": "pulse",
+   "directory" : "public/bower_components"
   "homepage": "https://github.com/LucillaC/PulseLabs",
   "authors": [
     "Lucilla Chalmer <chalmer.lucilla@gmail.com>"
