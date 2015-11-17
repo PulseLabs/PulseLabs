@@ -3,13 +3,18 @@ angular.module('pulse.playlist', [])
   $scope.tracks = [];
   $scope.currentPlaylist = {};
 
-  $scope.getPlaylist = function () {
-    var code = $stateParams.code;
+
+  $scope.getPlaylist = function (code) {
+    console.log('playlist code: ', code);
     Songs.getPlaylist(code)
     .then(function (playlist) {
       $scope.currentPlaylist = {};
     });
   };
+
+  if ($stateParams.code) {
+    $scope.getPlaylist($stateParams.code);
+  }
 
   $scope.searchTrack = function () {
     if ($scope.search !== '') {
@@ -35,13 +40,14 @@ angular.module('pulse.playlist', [])
   $scope.addPlaylist = function () {
     Songs.addPlaylist($scope.newName)
       .then(function (playlist) {
-        console.log('playlist returned from service: ', playlist);
+        // console.log('playlist returned from service: ', playlist);
         $scope.currentPlaylist = playlist;
-        $state.go('playlist');
+        // console.log(playlist.code);
+        $state.go('playlist', {code: playlist.code});
       });
   };
 
-  if ($location.path() != "/newPlaylist") {
-    $scope.getPlaylist();
-  }
+  // if ($location.path() != "/newPlaylist") {
+  //   $scope.getPlaylist();
+  // }
 });

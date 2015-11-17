@@ -15,7 +15,7 @@ angular.module('pulse.factory', [])
   var getPlaylist = function (code) {
     return $http({
       method: 'GET',
-      url: '/api/play/:' + code,
+      url: '/api/play/' + code,
       data: {}
     })
     .then(function (resp) {
