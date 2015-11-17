@@ -6,7 +6,8 @@
   "engine": "node 5.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js"
+    "start": "node server/server.js",
+    "postinstall": "bower install && grunt heroku"
   },
   "repository": {
     "type": "git",

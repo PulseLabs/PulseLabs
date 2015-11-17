@@ -2,4 +2,4 @@
 /public/styles/sample.js
 /server/exampple.js
 /build
-
+public/*.min.*
