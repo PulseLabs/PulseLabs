@@ -35,10 +35,11 @@ angular.module('pulse.playlist', [])
     }
   };
 
-  $scope.addSong = function () {
+  $scope.addSong = function (track) {
+    console.log(track);
     var code = $stateParams.code;
     if (code) {
-      Songs.addSong(code)
+      Songs.addSong(code, track)
       .then(function (addedSong) {
         res.json(addedSong);
       });
