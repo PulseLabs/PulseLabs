@@ -44,7 +44,11 @@
     "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-uglify": "^0.10.1",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-force-task": "^1.0.0",
+    "grunt-html2js": "^0.3.5",
+    "grunt-htmllint": "^0.2.7",
     "grunt-newer": "^1.1.1",
+    "grunt-ng-annotate": "^1.0.1",
     "time-grunt": "^1.2.2"
   }
 }
