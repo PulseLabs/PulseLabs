@@ -16,7 +16,7 @@ module.exports = {
       name: name
     };
 
-    findPlaylist({userid: userid})
+    findPlaylist({user: user})
     .then(function (foundList) {
       if (foundList) {
         res.json("Playlist already exists on this username");
@@ -42,19 +42,12 @@ module.exports = {
     findPlaylist({code: code})
       .then(function(playlist) {
         if (playlist) {
-<<<<<<< HEAD
-          if (password === playlist.password) {
-            res.json({reqUserId: reqUserId, playlist: playlist});
-          } else {
-            res.send('wrong password');
-          }
-=======
           // if (password === playlist.password) {
-            res.json(playlist.songList);
+          //   res.json({reqUserId: reqUserId, playlist: playlist});
           // } else {
           //   res.send('wrong password');
           // }
->>>>>>> SunyoungKim508-master
+          next();
         } else {
           res.send(404, 'Cannot find playlist.');
         }
@@ -71,6 +64,7 @@ module.exports = {
     var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
     findPlaylist({code: code})
       .then(function (playlist) {
+        console.log(playlist);
         if (playlist) {
           playlist.songList.push(newSong);
         }

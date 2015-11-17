@@ -41,10 +41,7 @@ angular.module('pulse.factory', [])
     return $http({
       method: 'POST',
       url: '/api/play/' + code +'/add',
-      data: {songname: "What do you mean?", "artist": "Justin", "uri": "adifhoawe", order: 0}
-    }).then(function (resp) {
-      console.log('service.addSong: ', resp.data);
-      return resp.data;
+      data: data
     });
   };
 

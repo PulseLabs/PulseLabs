@@ -5,11 +5,11 @@ angular.module('pulse.playlist', [])
   $scope.pos = 0;
 
   $scope.audio = document.getElementById('track');
-  $scope.audio.addEventListener('ended', function(){
-    console.log("audio has ended...going to next song");
-    $scope.pos += 1;
-    $scope.audio.src = $scope.playlist[$scope.pos];
-  });
+  // $scope.audio.addEventListener('ended', function(){
+  //   console.log("audio has ended...going to next song");
+  //   $scope.pos += 1;
+  //   $scope.audio.src = $scope.playlist[$scope.pos];
+  // });
 
   $scope.getPlaylist = function (code) {
     console.log('playlist code: ', code);
@@ -17,7 +17,7 @@ angular.module('pulse.playlist', [])
     .then(function (data) {
       $scope.tracks = data.playlist.songList;
       $scope.user = data.reqUserId;
-      $scope.owner = data.userid;
+      $scope.owner = data.user;
     });
   };
 
@@ -35,15 +35,19 @@ angular.module('pulse.playlist', [])
     }
   };
 
-  $scope.addSong = function () {
+  $scope.addSong = function (track) {
+    var newTrack = {
+      uri: track.uri
+    };
+
     var code = $stateParams.code;
     if (code) {
-      Songs.addSong(code)
+      Songs.addSong(code, track)
       .then(function (addedSong) {
-        res.json(addedSong);
+        return addedSong;
       });
     } else {
-      res.json('Please get code and submit it');
+      console.log('Please get code and submit it');
     }
   };
 
