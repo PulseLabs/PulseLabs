@@ -28,17 +28,18 @@ module.exports = {
 
   // client should pass code, and password
   gotoPlaylist: function(req, res, next) {
-    // var password = req.body.password;
+    var reqUserId = req.session.passport.user.username;
+    var password = req.body.password;
     var code = req.params.code;
     var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
     findPlaylist({code: code})
       .then(function(playlist) {
         if (playlist) {
-          // if (password === playlist.password) {
-            res.json(playlist);
-          // } else {
-            // res.send('wrong password');
-          // }
+          if (password === playlist.password) {
+            res.json({reqUserId: reqUserId, playlist: playlist});
+          } else {
+            res.send('wrong password');
+          }
         } else {
           res.send(404, 'Cannot find playlist.');
         }
