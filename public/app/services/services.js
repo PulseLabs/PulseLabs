@@ -5,7 +5,7 @@ angular.module('pulse.factory', [])
     return $http({
       method: 'GET',
       withCredentials: false,
-      url: 'http://api.spotify.com/v1/search?q='+searchStr+'&type=track'
+      url: 'https://api.spotify.com/v1/search?q='+searchStr+'&type=track'
     })
     .then(function (resp) {
       return resp.data;
