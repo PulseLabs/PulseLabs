@@ -1,23 +1,38 @@
 <div class="playlistView" ng-controller="PlaylistController">
+  <div class="col s6">
+    <input type="text" ng-model="search" ng-change="searchTrack()" placeholder="Search for an track">
+    <ul ng-show="search" class="collection">
+      <li class="collection-item avatar" ng-repeat="track in tracks">
+        <div>
+          <img src="{{ track.album.images[0].url }}" alt="" class="circle">
+          <span class="title">{{track.name}}</span>
+          <button class="btn" ng-click="addSong()">Add</button>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-  <input type="text" ng-model="search" ng-change="searchTrack()" placeholder="Search for an track">
-  <ul ng-show="search" class="collection">
-    <li class="collection-item avatar" ng-repeat="track in tracks">
+  <div class="container">
+    <div ng-if="user===owner">
       <div>
         <img src="{{ track.album.images[0].url }}" alt="" class="circle">
         <span class="title">{{track.name}} </span>
         <button class="btn add-button" ng-click="addSong()">+</button>
-      </div>
-    </li>
-  </ul>
 
-  <div class="container">
-    <h1>{{currentPlaylist.name}}</h1>
-    <ul class="collection data-table">
-    <li ng-repeat="song in currentPlaylist.songList" class="collection-item">
-      <!-- <div class="col m3">Date: {{sesh.date}}</div> -->
-      {{artist}}: {{songname}}
-    </li>
-    </ul>
+        <audio id="track" controls autoplay>
+          <source  ng-src="{{tracks[pos].uri}}" type="audio/mpeg">
+        </audio>
+      </div>
+    </div>
+    <div class="col s6">
+      <h1>{{currentPlaylist.name}}</h1>
+      <h3 ng-if="tracks[pos].uri">{{tracks[pos].name}}</h3>
+      <ul class="collection data-table">
+      <li ng-repeat="song in currentPlaylist.songList" class="collection-item">
+        <!-- <div class="col m3">Date: {{sesh.date}}</div> -->
+        {{artist}}: {{songname}}
+      </li>
+      </ul>
+    </div>
   </div>
 </div>
