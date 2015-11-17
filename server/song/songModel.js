@@ -3,25 +3,28 @@ var Q = require('q');
 
 var Schema = mongoose.Schema;
 var SongSchema = new Schema({
-  songname: {
-    type: String,
-    required: true
-  },
+  // songname: {
+  //   type: String
+  //   // ,
+  //   // required: true
+  // },
 
-  artist: {
-    type: String,
-    required: true
-  },
+  // artist: {
+  //   type: String
+  //   // ,
+  //   // required: true
+  // },
 
   uri: {
-    type: String,
-    required: true
+    type: String
+    // ,
+    // required: true
   },
 
-  image: {
-    type: String,
-    default: 'https://d3m79pznqer0b2.cloudfront.net/default-album-image.jpg'
-  },
+  // image: {
+  //   type: String,
+  //   default: 'https://d3m79pznqer0b2.cloudfront.net/default-album-image.jpg'
+  // },
 
   order: {
     type: Number
@@ -30,3 +33,10 @@ var SongSchema = new Schema({
 
 module.exports = SongSchema;
 // module.exports = mongoose.model('songs', SongSchema);
+
+
+// songname: name
+// artist:   album.artists[0].name
+// uri:      uri
+// image:    album.images[0].url
+// order:
