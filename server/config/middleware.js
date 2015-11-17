@@ -92,16 +92,10 @@ module.exports = function (app, io, express) {
 
   // var userRouter = express.Router();
   var playlistRouter = express.Router();
-  // app.use('/api/users', userRouter); // use user router for all user request
   var userRouter = express.Router();
-  var songRouter = express.Router();
-  // var playlistRouter = express.Router();
 
   app.use('/api/users', userRouter); // use user router for all user request
   app.use('/api/play', playlistRouter); // use play router for playlist request
-  // app.use('/api/song', songRouter);
 
-  // require('../users/userRoute.js')(userRouter);
-  require('../song/songRoute.js')(songRouter);
   require('../playlist/playlistRoute.js')(playlistRouter);
 };

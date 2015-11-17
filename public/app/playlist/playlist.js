@@ -21,20 +21,21 @@ angular.module('pulse.playlist', [])
       var searchStr = $scope.search.split(" ").join("+");
       Songs.searchSongs(searchStr)
       .then(function (resultData) {
-        // console.log(result.data.tracks.items);
         $scope.tracks = resultData.tracks.items;
       });
     }
   };
 
   $scope.addSong = function () {
-    $http({
-      method: 'POST',
-      url: '/api/play/add'
-    }).then(function (result) {
-      console.log('addsong');
-      return result;
-    });
+    var code = $stateParams.code;
+    if (code) {
+      Songs.addSong(code)
+      .then(function (addedSong) {
+        res.json(addedSong);
+      });
+    } else {
+      res.json('Please get code and submit it');
+    }
   };
 
   $scope.addPlaylist = function () {
@@ -42,7 +43,6 @@ angular.module('pulse.playlist', [])
       .then(function (playlist) {
         // console.log('playlist returned from service: ', playlist);
         $scope.currentPlaylist = playlist;
-        // console.log(playlist.code);
         $state.go('playlist', {code: playlist.code});
       });
   };

@@ -24,8 +24,7 @@ var SongSchema = new Schema({
   },
 
   order: {
-    type: Number,
-    required: true
+    type: Number
   }
 });
 

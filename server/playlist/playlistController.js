@@ -5,10 +5,10 @@ module.exports = {
 
   newPlaylist: function(req, res, next) {
     // console.log("$$$$$$$$$$$*****************", req);
-    console.log('*********** ', req.session.passport.user.username);
     var user = req.session.passport.user.username;
     var name = req.body.name;
-    // var password = req.body.password;
+    var password = req.body.password;
+    var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
     var createPlaylist = Q.nbind(Playlist.create, Playlist);
     var newPlaylist = {
       user: user,
@@ -16,13 +16,20 @@ module.exports = {
       name: name
     };
 
-    createPlaylist(newPlaylist).then(function (createdPlaylist) {
-      if (createdPlaylist) {
-        res.json(createdPlaylist);
+    findPlaylist({userid: userid})
+    .then(function (foundList) {
+      if (foundList) {
+        res.json("Playlist already exists on this username");
+      } else {
+        createPlaylist(newPlaylist).then(function (createdPlaylist) {
+          if (createdPlaylist) {
+            res.json(createdPlaylist);
+          }
+        })
+        .fail(function (error) {
+          next(error);
+        });
       }
-    })
-    .fail(function (error) {
-      next(error);
     });
   },
 
@@ -35,9 +42,9 @@ module.exports = {
       .then(function(playlist) {
         if (playlist) {
           // if (password === playlist.password) {
-            res.json(playlist);
+            res.json(playlist.songList);
           // } else {
-            // res.send('wrong password');
+          //   res.send('wrong password');
           // }
         } else {
           res.send(404, 'Cannot find playlist.');
@@ -51,26 +58,25 @@ module.exports = {
   addSong: function (req, res, next) {
     var code = req.params.code;
     var newSong = req.body;
-    // var newSong = {
-    //   songname: "What do you mean",
-    //   artist: "Justin",
-    //   uri: "spotify:artist:1uNFoZAHBGtllmzznpCI3s",
-    //   image: "https://i.scdn.co/image/01a39b1c64c6a93037f0a5af6b29e46987fde4ab",
-    //   order: 0
-    // };
 
     var findPlaylist = Q.nbind(Playlist.findOne, Playlist);
     findPlaylist({code: code})
-      .then(function(playlist) {
+      .then(function (playlist) {
         if (playlist) {
           playlist.songList.push(newSong);
         }
         playlist.save(function (err, newSong) {
-          if (err) return next(err);
+          if (err) {
+            console.log('addsong');
+            console.log(err);
+            return next(err);
+          }
           res.json(newSong);
         });
       })
       .fail(function (error) {
+        console.log('addsong');
+        console.log("ERROR", error);
         next(error);
       });
   },

@@ -13,15 +13,6 @@ app.use(express.static('public'));
 
 require('./config/middleware.js')(app, io, express);
 
-app.get('/login', function() {
-  // auth
-  // save user info to user collection
-});
-
-app.post('/party', function() {
-  //
-});
-
 app.listen(port, function(req, res) {
   console.log('Server is running.' + port);
 });
