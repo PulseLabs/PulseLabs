@@ -12,11 +12,6 @@ module.exports = function (app, io, express) {
   var appKey = 'd18305cfb355420caff075b39be0d8ef';
   var appSecret = 'e1d9ba2ed0d147cfbb1bbdf5e58441d2';
 
-  //passport session setup - user serialization, this serializes the entire profile atm
-
-  //TODO fix to "storing the user ID when serializing, and finding
-  //   the user by ID when deserializing"
-
   passport.serializeUser(function(user, done) {
     done(null, user);
   });
@@ -90,7 +85,6 @@ module.exports = function (app, io, express) {
     res.redirect('/login');
   }
 
-  // var userRouter = express.Router();
   var playlistRouter = express.Router();
   var userRouter = express.Router();
 

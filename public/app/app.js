@@ -1,7 +1,4 @@
-angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist','pulse.factory', 'pulse.auth', 'pulse.main'])
-// .constant('ApiEndpoint', {
-//   url: 'http://localhost:8100/api'
-// })
+angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.playlist','pulse.factory'])
 .config(function ($stateProvider, $httpProvider, $urlRouterProvider) {
 
   $httpProvider.defaults.useXDomain = true;
@@ -9,7 +6,6 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
   delete $httpProvider.defaults.headers.common["X-Requested-With"];
   $httpProvider.defaults.headers.common.Accept = "application/json";
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
-  // $httpProvider.defaults.headers.common["Access-Control-Allow-Origin"] = 'http://localhost:8888';
   $stateProvider
     .state('main', {
       url: '/main',
@@ -33,25 +29,25 @@ angular.module('pulse', ['ngCookies', 'ui.router', 'pulse.user', 'pulse.playlist
     });
 
   $urlRouterProvider.otherwise('/main');
-  // $httpProvider.interceptors.push('AttachTokens');
+  $httpProvider.interceptors.push('AttachTokens');
 });
-// .factory('AttachTokens', function ($window) {
-//   var attach = {
-//     request: function (object) {
-//       var jwt = $window.localStorage.getItem('com.shortly');
-//       if (jwt) {
-//         object.headers['x-access-token'] = jwt;
-//       }
-//       object.headers['Allow-Control-Allow-Origin'] = '*';
-//       return object;
-//     }
-//   };
-//   return attach;
-// })
-// .run(function ($rootScope, $location, Auth) {
-//   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-//     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-//       $location.path('/signin');
-//     }
-//   });
-// });
+.factory('AttachTokens', function ($window) {
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('com.shortly');
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
+})
+.run(function ($rootScope, $location, Auth) {
+  $rootScope.$on('$routeChangeStart', function (evt, next, current) {
+    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
+      $location.path('/signin');
+    }
+  });
+});

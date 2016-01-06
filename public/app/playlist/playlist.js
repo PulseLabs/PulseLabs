@@ -3,13 +3,7 @@ angular.module('pulse.playlist', [])
   $scope.tracks = [];
   $scope.currentPlaylist = {};
   $scope.pos = 0;
-
   $scope.audio = document.getElementById('track');
-  // $scope.audio.addEventListener('ended', function(){
-  //   console.log("audio has ended...going to next song");
-  //   $scope.pos += 1;
-  //   $scope.audio.src = $scope.playlist[$scope.pos];
-  // });
 
   $scope.getPlaylist = function (code) {
     console.log('playlist code: ', code);
@@ -54,13 +48,8 @@ angular.module('pulse.playlist', [])
   $scope.addPlaylist = function () {
     Songs.addPlaylist($scope.newName)
       .then(function (playlist) {
-        // console.log('playlist returned from service: ', playlist);
         $scope.currentPlaylist = playlist;
         $state.go('playlist', {code: playlist.code});
       });
   };
-
-  // if ($location.path() != "/newPlaylist") {
-  //   $scope.getPlaylist();
-  // }
 });

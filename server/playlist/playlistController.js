@@ -4,7 +4,6 @@ var Q = require('q');
 module.exports = {
 
   newPlaylist: function(req, res, next) {
-    // console.log("$$$$$$$$$$$*****************", req);
     var user = req.session.passport.user.username;
     var name = req.body.name;
     var password = req.body.password;
@@ -12,7 +11,6 @@ module.exports = {
     var createPlaylist = Q.nbind(Playlist.create, Playlist);
     var newPlaylist = {
       user: user,
-      // password: password,
       name: name
     };
 
@@ -42,11 +40,6 @@ module.exports = {
     findPlaylist({code: code})
       .then(function(playlist) {
         if (playlist) {
-          // if (password === playlist.password) {
-          //   res.json({reqUserId: reqUserId, playlist: playlist});
-          // } else {
-          //   res.send('wrong password');
-          // }
           next();
         } else {
           res.send(404, 'Cannot find playlist.');
