@@ -32,4 +32,7 @@ body {
   background-color: white;
   color: black;
   width: 40%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
